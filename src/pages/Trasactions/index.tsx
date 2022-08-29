@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Header } from "../../Components/Header";
 import { Summary } from "../../Components/Summary";
+import { SearchForm } from "./Components/SearchForm";
 
 export function Transactions() {
   return (
@@ -9,6 +10,7 @@ export function Transactions() {
       <Summary />
 
       <TrasanctionsContainer>
+        <SearchForm />
         <TrasanctionsTable>
           <tbody>
             <tr>
@@ -50,7 +52,7 @@ const TrasanctionsTable = styled.table`
   border-collapse: separate;
   border-spacing: 0 0.5rem;
 
-  /* margin-top: 1.5rem; */
+  margin-top: 1.5rem;
 
   td {
     padding: 1.25rem 2rem;
