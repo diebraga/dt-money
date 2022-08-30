@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import { X } from 'phosphor-react';
+import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
 import styled from 'styled-components';
 
 export function NewtransactionModal() {
@@ -15,13 +15,23 @@ export function NewtransactionModal() {
           <input type="number" placeholder='Price' required />
           <input type="text" placeholder='Category' required />
 
+          <TrasactionTypeContainer>
+            <TransactionButtonType variant='income'>
+              <ArrowCircleUp size={24} />
+              Income
+            </TransactionButtonType>
+            <TransactionButtonType variant='outcome'>
+              <ArrowCircleDown size={24} />
+              Outcome
+            </TransactionButtonType>
+          </TrasactionTypeContainer>
           <button type='submit'>
             Save
           </button>
         </form>
 
         <CloseButton>
-          <X size={25}/>
+          <X size={25} />
         </CloseButton>
       </Content>
     </Dialog.Portal>
@@ -96,4 +106,32 @@ const CloseButton = styled(Dialog.Close)`
   cursor: pointer;
   color: ${p => p.theme['gray-500']};
   line-height: 0;
+`
+
+const TrasactionTypeContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+`
+
+type TransactionButtonTypeProps = {
+  variant: 'income' | 'outcome'
+}
+
+const TransactionButtonType = styled.button<TransactionButtonTypeProps>`
+  background: ${p => p.theme['gray-700']};
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 0;
+  color: ${p => p.theme['gray-300']};
+
+  svg {
+    color: ${p => p.variant === 'income' ? p.theme['green-300'] : p.theme['red-300']};
+  }
 `
