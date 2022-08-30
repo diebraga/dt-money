@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
 import styled from 'styled-components';
+import * as RadioGroup from '@radix-ui/react-radio-group';
 
 export function NewtransactionModal() {
   return (
@@ -16,11 +17,11 @@ export function NewtransactionModal() {
           <input type="text" placeholder='Category' required />
 
           <TrasactionTypeContainer>
-            <TransactionButtonType variant='income'>
+            <TransactionButtonType variant='income' value='income'>
               <ArrowCircleUp size={24} />
               Income
             </TransactionButtonType>
-            <TransactionButtonType variant='outcome'>
+            <TransactionButtonType variant='outcome' value='outcome'>
               <ArrowCircleDown size={24} />
               Outcome
             </TransactionButtonType>
@@ -108,7 +109,7 @@ const CloseButton = styled(Dialog.Close)`
   line-height: 0;
 `
 
-const TrasactionTypeContainer = styled.div`
+const TrasactionTypeContainer = styled(RadioGroup.Root)`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
@@ -119,7 +120,7 @@ type TransactionButtonTypeProps = {
   variant: 'income' | 'outcome'
 }
 
-const TransactionButtonType = styled.button<TransactionButtonTypeProps>`
+const TransactionButtonType = styled(RadioGroup.Item) <TransactionButtonTypeProps>`
   background: ${p => p.theme['gray-700']};
   padding: 1rem;
   display: flex;
@@ -134,4 +135,18 @@ const TransactionButtonType = styled.button<TransactionButtonTypeProps>`
   svg {
     color: ${p => p.variant === 'income' ? p.theme['green-300'] : p.theme['red-300']};
   }
+
+  &[data-state='checked'] {
+    color: ${p => p.theme.white};
+    background: ${p => p.variant === 'income' ? p.theme['green-500'] : p.theme['red-500']};
+
+    svg {
+      color: ${p => p.theme.white};
+    }
+  }
+
+  &[data-state='unchecked']:hover {
+    background: ${p => p.theme['gray-600']};
+  }
+
 `
