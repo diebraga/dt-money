@@ -1,0 +1,20 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Web development",
+      "type": "incone",
+      "category": "selling",
+      "amount": 2000,
+      "createdAt": "2022-08-30T11:26:00.968Z"
+    }, 
+    {
+      "id": 1,
+      "description": "Burger King",
+      "type": "outcome",
+      "category": "food",
+      "amount": 20,
+      "createdAt": "2022-09-01T11:26:00.968Z"
+    }
+  ]
+}
