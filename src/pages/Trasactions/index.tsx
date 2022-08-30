@@ -1,9 +1,21 @@
 import styled from "styled-components";
 import { Header } from "../../Components/Header";
 import { Summary } from "../../Components/Summary";
+import { useFetch } from "../../hooks/useFetch";
 import { SearchForm } from "./Components/SearchForm";
 
+interface TransactionType {
+  id: number;
+  description: string;
+  type: "income" | "outcome";
+  category: string;
+  amount: number;
+  createdAt: string;
+}
+
 export function Transactions() {
+  const { data, error } = useFetch<TransactionType[]>('http://localhost:3333/transactions')
+
   return (
     <>
       <Header />
@@ -13,26 +25,20 @@ export function Transactions() {
         <SearchForm />
         <TrasanctionsTable>
           <tbody>
-            <tr>
-              <td width={'50%'}>Web development</td>
-              <td>
-                <PriceHighlight variant="income">
-                  € 1.000.00
-                </PriceHighlight>
-              </td>
-              <td>Internet</td>
-              <td>13/12/2022</td>
-            </tr>
-            <tr>
-              <td width={'50%'}>Web development</td>
-              <td>
-                <PriceHighlight variant="outcome">
-                  - € 1.000.00
-                </PriceHighlight>
-              </td>
-              <td>Internet</td>
-              <td>13/12/2022</td>
-            </tr>
+            {data?.map(transaction => {
+              return (
+                <tr key={transaction.id}>
+                  <td width={'50%'}>{transaction.description}</td>
+                  <td>
+                    <PriceHighlight variant={transaction.type}>
+                      {transaction.type === "outcome" && '-'}  € {transaction.amount}
+                    </PriceHighlight>
+                  </td>
+                  <td>{transaction.category}</td>
+                  <td>{transaction.createdAt}</td>
+                </tr>
+              )
+            })}
           </tbody>
         </TrasanctionsTable>
       </TrasanctionsContainer>
@@ -75,5 +81,5 @@ interface PriceHighlight {
 }
 
 const PriceHighlight = styled.span<PriceHighlight>`
-  color: ${p => p.variant === 'income' ? p.theme["gray-300"] : p.theme["red-300"]}
+  color: ${p => p.variant === 'income' ? p.theme["green-300"] : p.theme["red-300"]}
 `
