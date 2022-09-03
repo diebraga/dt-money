@@ -4,19 +4,19 @@ import styled from 'styled-components';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from "zod"
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 const schema = z.object({
   description: z.string(),
   amount: z.number(),
-  // type: z.enum(["income", "outcome"]),
+  type: z.enum(["income", "outcome"]),
   category: z.string()
 })
 
 type Inputs = z.infer<typeof schema>
 
 export function NewtransactionModal() {
-  const { register, handleSubmit, formState } = useForm<Inputs>({
+  const { register, handleSubmit, formState, control } = useForm<Inputs>({
     resolver: zodResolver(schema)
   })
 
@@ -36,16 +36,24 @@ export function NewtransactionModal() {
           <input type="number" placeholder='Amount' required {...register("amount", { valueAsNumber: true })} />
           <input type="text" placeholder='Category' required {...register("category")} />
 
-          <TrasactionTypeContainer>
-            <TransactionButtonType variant='income' value='income'>
-              <ArrowCircleUp size={24} />
-              Income
-            </TransactionButtonType>
-            <TransactionButtonType variant='outcome' value='outcome'>
-              <ArrowCircleDown size={24} />
-              Outcome
-            </TransactionButtonType>
-          </TrasactionTypeContainer>
+          <Controller
+            control={control}
+            name='type'
+            render={({ field }) => {
+              return (
+                <TrasactionTypeContainer onValueChange={field.onChange} value={field.value}>
+                  <TransactionButtonType variant='income' value='income'>
+                    <ArrowCircleUp size={24} />
+                    Income
+                  </TransactionButtonType>
+                  <TransactionButtonType variant='outcome' value='outcome'>
+                    <ArrowCircleDown size={24} />
+                    Outcome
+                  </TransactionButtonType>
+                </TrasactionTypeContainer>
+              )
+            }}
+          />
           <button type='submit' disabled={formState.isSubmitting}>
             Save
           </button>
