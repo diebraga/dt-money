@@ -15,6 +15,14 @@
       "category": "food",
       "amount": 20,
       "createdAt": "2022-09-01T11:26:00.968Z"
+    },
+    {
+      "id": 3,
+      "description": "Cafe de Paris",
+      "type": "outcome",
+      "category": "food",
+      "amount": 30,
+      "createdAt": "2022-10-01T11:26:00.968Z"
     }
   ]
 }
