@@ -1,21 +1,12 @@
+import { useTransition } from "react";
 import styled from "styled-components";
-import { Header } from "../../Components/Header";
-import { Summary } from "../../Components/Summary";
-import { useFetch } from "../../hooks/useFetch";
+import { Header } from "../../components/Header";
+import { Summary } from "../../components/Summary";
+import { useTransactions } from "../../hooks/useTransactions";
 import { SearchForm } from "./Components/SearchForm";
 
-interface TransactionType {
-  id: number;
-  description: string;
-  type: "income" | "outcome";
-  category: string;
-  amount: number;
-  createdAt: string;
-}
-
 export function Transactions() {
-  const { data, error } = useFetch<TransactionType[]>('http://localhost:3333/transactions')
-
+  const { transactions } = useTransactions()
   return (
     <>
       <Header />
@@ -25,7 +16,7 @@ export function Transactions() {
         <SearchForm />
         <TrasanctionsTable>
           <tbody>
-            {data?.map(transaction => {
+            {transactions?.map(transaction => {
               return (
                 <tr key={transaction.id}>
                   <td width={'50%'}>{transaction.description}</td>
